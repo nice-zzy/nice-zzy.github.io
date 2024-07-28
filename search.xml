@@ -15,8 +15,8 @@
   <entry>
     <title>AI大模型-1 baseline初体验</title>
     <url>/posts/6ea94fe8/</url>
-    <content><![CDATA[<h1 id="大模型打卡第一天！——逻辑推理"><a href="#大模型打卡第一天！——逻辑推理" class="headerlink" title="大模型打卡第一天！——逻辑推理"></a>大模型打卡第一天！——逻辑推理</h1><p>1.体验一站式baseline</p>
-<p>2.了解逻辑推理（以下为逻辑推理的笔记，另附相关知识深入学习的网址参考）</p>
+    <content><![CDATA[<h1 id="大模型打卡第一天！——逻辑推理datawhale-AI夏令营"><a href="#大模型打卡第一天！——逻辑推理datawhale-AI夏令营" class="headerlink" title="大模型打卡第一天！——逻辑推理datawhale-AI夏令营"></a>大模型打卡第一天！——逻辑推理datawhale-AI夏令营</h1><p>1.体验一站式baseline</p>
+<p>2.了解逻辑推理（以下为逻辑推理的笔记及一些理解补充，另附相关知识深入学习的网址参考）</p>
 <p>[TOC]</p>
 <h2 id="传统逻辑推理解决方式"><a href="#传统逻辑推理解决方式" class="headerlink" title="传统逻辑推理解决方式"></a>传统逻辑推理解决方式</h2><h4 id="知识表示：奠定推理基石"><a href="#知识表示：奠定推理基石" class="headerlink" title="知识表示：奠定推理基石"></a>知识表示：奠定推理基石</h4><p>逻辑推理始于将知识转化为计算机可以理解和操作的形式。这里有几个常用的逻辑系统：</p>
 <ul>
