@@ -77,6 +77,18 @@
       </tags>
   </entry>
   <entry>
+    <title>My first blog !</title>
+    <url>/2024/07/12/My%20first%20blog/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本篇文章里我将简单介绍我的个人博客搭建过程</p>
+]]></content>
+      <tags>
+        <tag>github</tag>
+        <tag>git</tag>
+        <tag>node.js</tag>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2024/07/11/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -93,17 +105,5 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>My first blog !</title>
-    <url>/2024/07/12/My%20first%20blog/</url>
-    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本篇文章里我将简单介绍我的个人博客搭建过程</p>
-]]></content>
-      <tags>
-        <tag>github</tag>
-        <tag>git</tag>
-        <tag>node.js</tag>
-        <tag>Hexo</tag>
-      </tags>
   </entry>
 </search>
