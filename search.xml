@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>My first blog !</title>
+    <url>/nice-zzy.github.io/2024/07/12/My%20first%20blog/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本篇文章里我将简单介绍我的个人博客搭建过程</p>
+]]></content>
+      <tags>
+        <tag>github</tag>
+        <tag>git</tag>
+        <tag>node.js</tag>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI大模型-1 baseline初体验</title>
+    <url>/nice-zzy.github.io/2024/07/25/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B-1baseline%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+    <content><![CDATA[<h1 id="大模型打卡第一天！——逻辑推理"><a href="#大模型打卡第一天！——逻辑推理" class="headerlink" title="大模型打卡第一天！——逻辑推理"></a>大模型打卡第一天！——逻辑推理</h1><p>1.体验一站式baseline</p>
+<p>2.了解逻辑推理（以下为逻辑推理的笔记，另附相关知识深入学习的网址参考）</p>
+<p>[TOC]</p>
+<h2 id="传统逻辑推理解决方式"><a href="#传统逻辑推理解决方式" class="headerlink" title="传统逻辑推理解决方式"></a>传统逻辑推理解决方式</h2><h4 id="知识表示：奠定推理基石"><a href="#知识表示：奠定推理基石" class="headerlink" title="知识表示：奠定推理基石"></a>知识表示：奠定推理基石</h4><p>逻辑推理始于将知识转化为计算机可以理解和操作的形式。这里有几个常用的逻辑系统：</p>
+<ul>
+<li>一阶逻辑：描述个体、属性及它们之间的关系，如“所有猫都有四条腿”。（可参考<a href="http://t.csdnimg.cn/5yzOe%EF%BC%89">http://t.csdnimg.cn/5yzOe）</a></li>
+<li>命题逻辑：简单直观，适用于描述基本的真伪陈述，如“A是真”。（即逻辑推理判断真假<a href="http://t.csdnimg.cn/N7uJO%EF%BC%89">http://t.csdnimg.cn/N7uJO）</a></li>
+<li>模态逻辑：引入了“可能”和“必然”的概念，帮助我们处理不确定性和可能性（<a href="http://t.csdnimg.cn/lihke%EF%BC%89">http://t.csdnimg.cn/lihke）</a></li>
+<li>描述逻辑：专为构建知识图谱设计，有助于定义概念、类别和它们之间的联系，非常适合语义网（<a href="http://t.csdnimg.cn/FwuMe%EF%BC%89">http://t.csdnimg.cn/FwuMe）</a></li>
+</ul>
+<h4 id="推理引擎：推动逻辑向前发展"><a href="#推理引擎：推动逻辑向前发展" class="headerlink" title="推理引擎：推动逻辑向前发展"></a>推理引擎：推动逻辑向前发展</h4><p>推理引擎是执行逻辑推理的核心组件，它通过不同的方式分析知识并得出结论：</p>
+<ul>
+<li>前向链式推理：从已知事实出发，一步步应用规则，直至得出结论。</li>
+<li>后向链式推理：从目标逆向寻找支持其成立的依据，类似侦探破案。</li>
+<li>溯因推理：在直接证据不足时，通过最合理解释填补空白。</li>
+<li><strong>非单调推理</strong>：随着新信息的加入，允许之前的结论被修正或推翻。(相比于单调推理，非单调推理并不依赖于严格的推理形式，符合现实合理性即可<a href="http://t.csdnimg.cn/oWrrv">http://t.csdnimg.cn/oWrrv</a>)</li>
+</ul>
+<h4 id="应对不确定性和不完整信息"><a href="#应对不确定性和不完整信息" class="headerlink" title="应对不确定性和不完整信息"></a>应对不确定性和不完整信息</h4><p>现实世界的数据往往不完整或模糊，为此，我们采用特殊策略应对：</p>
+<ul>
+<li>概率逻辑：结合概率理论，为不确定性提供数学基础。</li>
+<li>模糊逻辑：允许不同程度的真值，超越了非黑即白的二元思维。</li>
+<li><strong>缺省逻辑</strong>：在信息缺失时，基于合理假设做出最佳推测。</li>
+</ul>
+<h4 id="算法与优化：提升推理效率"><a href="#算法与优化：提升推理效率" class="headerlink" title="算法与优化：提升推理效率"></a>算法与优化：提升推理效率</h4><p>高效的推理需要优化算法，以下是一些常见的技术：</p>
+<ul>
+<li>单元传播：在处理布尔逻辑问题时，一旦确定某个变量的状态，立即更新所有相关条件。</li>
+<li><strong>冲突驱动的子句学习（CDCL）</strong>：从冲突中提炼新规则，避免重复错误。(<a href="http://t.csdnimg.cn/Nej9P">http://t.csdnimg.cn/Nej9P</a>)</li>
+<li>约束传播：通过缩小变量的取值范围，快速排除不可能选项，加速搜索过程</li>
+</ul>
+<h2 id="传统机器学习如何解决此类问题："><a href="#传统机器学习如何解决此类问题：" class="headerlink" title="传统机器学习如何解决此类问题："></a>传统机器学习如何解决此类问题：</h2><ol>
+<li>特征工程: 首先，需要将问题和选项转换为机器可以理解和操作的特征向量。这可能包括将文本问题和答案选项编码为数值向量，比如通过词袋模型（Bag-of-Words）、TF-IDF 或者词嵌入（Word Embeddings）如 Word2Vec 或 GloVe。</li>
+<li>模型选择: 接下来，选择一个适合分类任务的模型。对于选择题，常见的模型有：<ol>
+<li>决策树</li>
+<li>支持向量机</li>
+<li>随机森林</li>
+<li>逻辑回归</li>
+<li>神经网络</li>
+</ol>
+</li>
+<li>训练模型: 使用已知正确答案的题目作为训练数据，将问题和选项的特征向量输入模型，并标记正确的答案。模型会学习到从特征到正确答案之间的映射关系。</li>
+<li>预测与评估: 当模型训练完成后，可以使用测试集来评估模型的准确性和泛化能力。测试集应该包含模型未曾见过的问题和选项。</li>
+<li>解决新问题: 对于新的选择题，模型会接收问题和选项的特征向量作为输入，并输出每个选项的概率或分数，最高分的选项即为模型认为的正确答案。</li>
+</ol>
+<p>为了提高模型在逻辑推理任务上的性能，可以尝试以下策略：</p>
+<ul>
+<li>逻辑规则嵌入：在模型中添加逻辑规则，例如，如果模型是神经网络，可以考虑使用神经符号集成（Neuro-Symbolic Integration）技术，其中逻辑规则被编码为网络的一部分。</li>
+<li>增强学习：使用增强学习来奖励模型在逻辑上合理的选择，这样模型不仅学习到数据中的模式，还能学会基于逻辑原则做出选择。</li>
+<li>元学习：让模型学习如何学习，通过在多个相关任务上训练，使模型能够更快地适应新类型的选择题。</li>
+</ul>
+<h2 id="深度学习如何解决此类问题："><a href="#深度学习如何解决此类问题：" class="headerlink" title="深度学习如何解决此类问题："></a>深度学习如何解决此类问题：</h2><p>深度学习方法在处理逻辑推理类型的选择题时，主要依赖于其强大的模式识别和抽象能力，以及对复杂数据结构的处理能力。以下是深度学习解决这类问题的一般步骤和方法：</p>
+<ol>
+<li><strong>数据预处理</strong>: 将文本数据转换为可以输入到神经网络的格式，常见的做法是使用词嵌入（如Word2Vec、GloVe或FastText）或字符级嵌入，将文本转化为数值向量。（将NLP应用于机器学习，具体关于词嵌入方法可参考<a href="http://t.csdnimg.cn/FG7tz%EF%BC%89">http://t.csdnimg.cn/FG7tz）</a></li>
+<li><strong>模型架构选择</strong>: 根据问题的复杂度和数据的特性选择合适的模型。常用的深度学习模型包括：<ol>
+<li>循环神经网络（RNNs）: 特别是长短期记忆网络（LSTMs）和门控循环单元（GRUs），它们擅长处理序列数据，能够捕捉到文本中的上下文关系。（与传统前馈神经网络不同的是它可以记忆之前的信息，方便做出推理及预测<a href="http://t.csdnimg.cn/8ngKz%EF%BC%89">http://t.csdnimg.cn/8ngKz）</a></li>
+<li>卷积神经网络（CNNs）: 卷积层能够检测局部模式，对于短文本和固定长度的输入有效。（可分析局部元素，相当于一个滤波器，不同的卷积矩阵可帮助实现不同的目的<a href="http://t.csdnimg.cn/BwXLr%EF%BC%89">http://t.csdnimg.cn/BwXLr）</a></li>
+<li>变换器（Transformers）: 如BERT、RoBERTa等预训练模型，它们利用自注意力机制处理序列数据，能够高效地处理长文本和理解上下文。</li>
+<li>记忆增强网络: 如记忆网络（Memory Networks）和端到端记忆网络（End-to-End Memory Networks），它们可以在内部存储和检索信息，有助于逻辑推理。（<a href="http://t.csdnimg.cn/sKBMa%EF%BC%89">http://t.csdnimg.cn/sKBMa）</a></li>
+</ol>
+</li>
+<li><strong>多选题处理</strong>: 将选择题设计为多标签分类问题，其中每个选项都是一个潜在的标签。模型需要预测每个选项的得分或概率，最终选择得分最高的选项作为答案。</li>
+<li><strong>训练</strong>: 利用标注过的数据集进行训练，目标是最小化损失函数，通常是交叉熵损失，以提高模型在预测正确答案时的准确性。</li>
+<li><strong>推理阶段</strong>: 在测试或应用阶段，模型接收新的问题和选项，将其转换为相应的向量表示，然后通过模型进行预测，得到每个选项的得分或概率分布，最后选择得分最高的选项作为答案。</li>
+<li><strong>后处理和解释</strong>: 可能需要额外的步骤来解释模型的决策，例如通过注意力权重来了解模型在做决策时关注了哪些部分的文本。</li>
+<li><strong>集成学习</strong>: 结合多个模型的预测结果，通过投票或加权平均的方式提高最终预测的准确率。</li>
+<li><strong>持续学习和调整</strong>: 如果可用，可以使用增量学习或在线学习方法，使模型能够随着更多数据的到来而不断改进。</li>
+</ol>
+<p>深度学习模型的一个关键优势在于它们能够自动学习特征表示，不需要人工进行特征工程，这对于逻辑推理问题尤为重要，因为这些问题可能涉及到复杂的语言模式和隐含的逻辑关系。此外，预训练模型（如BERT）的出现使得模型能够在大量未标记文本上进行预训练，然后再针对具体任务进行微调，这种迁移学习的能力极大地提高了模型的性能和泛化能力。</p>
+]]></content>
+      <tags>
+        <tag>逻辑推理</tag>
+        <tag>baseline</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/nice-zzy.github.io/2024/07/11/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
