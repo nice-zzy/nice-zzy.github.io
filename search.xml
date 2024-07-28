@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>My first blog !</title>
-    <url>/2024/07/12/My%20first%20blog/</url>
-    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本篇文章里我将简单介绍我的个人博客搭建过程</p>
-]]></content>
-      <tags>
-        <tag>github</tag>
-        <tag>git</tag>
-        <tag>node.js</tag>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AI大模型-1 baseline初体验</title>
     <url>/2024/07/25/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B-1baseline%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="大模型打卡第一天！——逻辑推理"><a href="#大模型打卡第一天！——逻辑推理" class="headerlink" title="大模型打卡第一天！——逻辑推理"></a>大模型打卡第一天！——逻辑推理</h1><p>1.体验一站式baseline</p>
@@ -86,6 +74,18 @@
       <tags>
         <tag>逻辑推理</tag>
         <tag>baseline</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>My first blog !</title>
+    <url>/2024/07/12/My%20first%20blog/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本篇文章里我将简单介绍我的个人博客搭建过程</p>
+]]></content>
+      <tags>
+        <tag>github</tag>
+        <tag>git</tag>
+        <tag>node.js</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
