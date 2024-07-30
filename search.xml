@@ -1,67 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AI大模型-2Baseline精读</title>
-    <url>/posts/5dacfb0c/</url>
-    <content><![CDATA[<h1 id="AI大模型打卡2！——Datawhale夏令营"><a href="#AI大模型打卡2！——Datawhale夏令营" class="headerlink" title="AI大模型打卡2！——Datawhale夏令营"></a>AI大模型打卡2！——Datawhale夏令营</h1><p>引言：打卡2分为两部分，第一部分为LLM的一些理论知识，二是代码的解析。打卡2主要是对打卡1的进一步理解，重点在对baseline代码的精读分析上，笔者在原代码基础上补充了很多基础知识、语法，适合新手食用。</p>
-<h2 id="一、进一步理解LLM"><a href="#一、进一步理解LLM" class="headerlink" title="一、进一步理解LLM"></a>一、进一步理解LLM</h2><p>LLM，即Large Language Model（大型语言模型），是人工智能领域，特别是自然语言处理（NLP）中的一个重要概念。LLM是指那些具有大量参数、能够处理复杂语言任务的深度学习模型，这些模型通常基于transformer结构。</p>
-<h3 id="1-Transformer结构"><a href="#1-Transformer结构" class="headerlink" title="1.Transformer结构"></a>1.Transformer结构</h3><p>Transformer模型采用编码器-解码器（Encoder-Decoder）结构。其中，编码器负责将输入序列映射为连续表示，解码器则根据编码器的输出逐步生成输出序列。</p>
-<h4 id="1-1编码器（Encoder）"><a href="#1-1编码器（Encoder）" class="headerlink" title="1.1编码器（Encoder）"></a>1.1编码器（Encoder）</h4><p>编码器由多个编码器层堆叠而成，每个编码器层包含两个主要子层：</p>
-<ol>
-<li><strong>多头自注意力机制（Multi-Head Attention）</strong>：这是Transformer模型的核心组件之一。它允许模型同时关注输入序列中不同位置的信息，从而捕捉序列中的全局依赖关系。多头自注意力机制通过多个“头”（heads）并行计算自注意力，然后将结果拼接起来，以增强模型的表达能力。</li>
-<li><strong>前馈神经网络（Feed Forward Neural Network）</strong>：这是一个简单的全连接前馈网络，用于对自注意力机制的输出进行进一步处理。它通常包括两个线性变换和一个ReLU激活函数。</li>
-</ol>
-<p>​		此外，每个子层之间还包含了残差连接（Residual Connection）和层归一化（Layer Normalization），以帮助模型在训练过程中保持稳定性。</p>
-<h4 id="1-2解码器（Decoder）"><a href="#1-2解码器（Decoder）" class="headerlink" title="1.2解码器（Decoder）"></a>1.2解码器（Decoder）</h4><p>解码器同样由多个解码器层堆叠而成，但每个解码器层包含三个主要子层：</p>
-<ol>
-<li><strong>第一个多头自注意力机制</strong>：与编码器中的自注意力机制类似，但它采用了掩码（Masking）操作来防止在预测当前位置时看到未来的信息。</li>
-<li><strong>编码器-解码器注意力机制（Encoder-Decoder Attention）</strong>：这个子层允许解码器关注编码器的输出，从而捕捉输入序列和输出序列之间的依赖关系。</li>
-<li><strong>前馈神经网络</strong>：与编码器中的前馈神经网络相同，用于对注意力机制的输出进行进一步处理。</li>
-</ol>
-<h4 id="1-3输入与输出"><a href="#1-3输入与输出" class="headerlink" title="1.3输入与输出"></a>1.3输入与输出</h4><ol>
-<li><strong>输入</strong>：Transformer的输入包括单词嵌入（Word Embedding）和位置嵌入（Positional Encoding）。单词嵌入用于将输入的单词转换为固定维度的向量表示；位置嵌入用于提供单词在序列中的位置信息，因为Transformer模型本身不依赖于序列的顺序信息。</li>
-<li><strong>输出</strong>：Transformer的输出取决于具体的任务。在机器翻译等序列到序列的任务中，解码器的输出会经过一个线性层和softmax层，以生成目标序列中每个位置的概率分布。</li>
-</ol>
-<h4 id="1-4自注意力机制（Self-Attention-Mechanism）"><a href="#1-4自注意力机制（Self-Attention-Mechanism）" class="headerlink" title="1.4自注意力机制（Self-Attention Mechanism）"></a>1.4自注意力机制（Self-Attention Mechanism）</h4><p>​		自注意力机制是Transformer模型中的关键组件。它通过计算输入序列中所有位置之间的相似度得分，来捕捉序列中的依赖关系。具体来说，自注意力机制接受三个输入：查询（Query）、键（Key）和值（Value），它们都是输入序列的线性变换结果。然后，通过计算查询与键之间的相似度得分，并将这些得分应用于值上，得到加权和作为输出。这种机制允许模型同时考虑输入序列中所有位置的信息，从而更好地捕捉全局依赖关系。</p>
-<h3 id="2-LLM与传统机器学习的区别"><a href="#2-LLM与传统机器学习的区别" class="headerlink" title="2.LLM与传统机器学习的区别"></a>2.LLM与传统机器学习的区别</h3><p>​		简而言之，LLM以其强大的生成能力、上下文理解能力和迁移学习能力在自然语言处理领域展现出巨大的潜力；而传统机器学习则以其简单高效、易于解释的特点在多个领域和场景中发挥着重要作用。</p>
-<h4 id="2-1定义与基本原理"><a href="#2-1定义与基本原理" class="headerlink" title="2.1定义与基本原理"></a>2.1定义与基本原理</h4><ul>
-<li><strong>LLM</strong>：LLM基于深度学习技术，特别是Transformer结构的大型语言模型。它通过在海量的文本数据上进行无监督学习和迁移学习，学会了理解和生成自然语言文本的能力。LLM具有强大的上下文理解能力、生成能力和迁移学习能力。</li>
-<li><strong>传统机器学习</strong>：传统机器学习是指通过算法对数据进行学习和分析，从而找到数据中的模式和规律，并利用这些模式和规律对未知数据进行预测或分类的技术。传统机器学习算法多种多样，包括但不限于决策树、支持向量机、随机森林等。</li>
-</ul>
-<h4 id="2-2数据需求与训练过程"><a href="#2-2数据需求与训练过程" class="headerlink" title="2.2数据需求与训练过程"></a>2.2数据需求与训练过程</h4><ul>
-<li><strong>LLM</strong>：LLM需要大量的文本数据进行训练，这些数据通常来自互联网上的各种文本资源。训练过程中，LLM会学习文本中的语言模式和规律，并通过无监督学习不断优化其参数。此外，LLM还具有迁移学习能力，可以在不同任务之间进行快速适应和微调。</li>
-<li><strong>传统机器学习</strong>：传统机器学习对数据的需求相对较少，可以根据具体任务的需求选择适当的数据集进行训练。训练过程中，传统机器学习算法会根据数据集中的特征进行学习和优化，以建立预测或分类模型。</li>
-</ul>
-<h4 id="2-3应用场景与性能"><a href="#2-3应用场景与性能" class="headerlink" title="2.3应用场景与性能"></a>2.3应用场景与性能</h4><ul>
-<li><strong>LLM</strong>：多任务、复杂场景处理能力强。在自然语言处理领域具有广泛的应用场景，如文本生成、信息提取、文本分类、情感分析、机器翻译等。由于其强大的生成能力和上下文理解能力，LLM在创意写作、自动摘要、对话系统等方面表现出色。此外，LLM还可以通过迁移学习快速适应不同的NLP任务，并在性能上取得显著提升。</li>
-<li><strong>传统机器学习</strong>：传统机器学习在处理复杂多变的自然语言任务时，可能表现出一定的局限性。而在信用评估、客户分类、在线广告推荐等领域中的性能稳定可靠，能够快速得到结果。</li>
-</ul>
-<h4 id="2-4计算资源与可解释性"><a href="#2-4计算资源与可解释性" class="headerlink" title="2.4计算资源与可解释性"></a>2.4计算资源与可解释性</h4><ul>
-<li><strong>LLM</strong>：由于LLM模型规模庞大且参数众多，因此需要大量的计算资源进行训练和推理。此外，LLM的决策过程往往是黑箱操作，难以解释其背后的原因和逻辑。这在一定程度上限制了LLM在某些需要高可解释性场景中的应用。</li>
-<li><strong>传统机器学习</strong>：传统机器学习算法的计算资源需求相对较低，可以在较短时间内完成训练和推理过程。此外，部分传统机器学习算法具有较好的可解释性，能够解释模型的决策过程和结果。这使得传统机器学习在某些需要高可解释性场景中具有优势。</li>
-</ul>
-<h2 id="二、baseline代码精读"><a href="#二、baseline代码精读" class="headerlink" title="二、baseline代码精读"></a>二、baseline代码精读</h2><h3 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1.环境配置"></a>1.环境配置</h3><h4 id="配置环境、配置API"><a href="#配置环境、配置API" class="headerlink" title="配置环境、配置API"></a><strong>配置环境、配置API</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install scipy openai tiktoken retry dashscope loguru</span><br><span class="line">dashscope.api_key=&quot;sk-&quot;</span><br></pre></td></tr></table></figure>
-
-<h4 id="导入所需环境，引入所需的库-已注释，后续会对相关知识有所补充"><a href="#导入所需环境，引入所需的库-已注释，后续会对相关知识有所补充" class="headerlink" title="导入所需环境，引入所需的库(已注释，后续会对相关知识有所补充)"></a><strong>导入所需环境，引入所需的库(已注释，后续会对相关知识有所补充)</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import json 				#编码和解码JSON数据</span><br><span class="line">import os					#执行文件、目录、环境变量的相关操作</span><br><span class="line">from pprint import pprint	#美化输出数据结构的模块</span><br><span class="line">import re					#正则表达式</span><br><span class="line">from tqdm import tqdm		#添加一个进度提示信息</span><br><span class="line">import random				#随机</span><br><span class="line"></span><br><span class="line">import uuid					#生成唯一通识符</span><br><span class="line">import openai				#用于与OpenAI的API进行交互</span><br><span class="line">import tiktoken</span><br><span class="line">import numpy as np			#Python的一个库，用于支持大量的维度数组与矩阵运算</span><br><span class="line">import requests				#发送HTTP请求</span><br><span class="line">from retry import retry		#用于自动重试失败的函数调用</span><br><span class="line">from scipy import sparse	#scipy库中的稀疏矩阵模块，用于处理大型稀疏矩阵</span><br><span class="line">#from rank_bm25 import BM25Okapi</span><br><span class="line">#import jieba</span><br><span class="line">from http import HTTPStatus	#用于在HTTP响应中指示服务器的响应状态，如请求成功、请求错误、重定向等</span><br><span class="line">import dashscope			#引用阿里云模型服务产品</span><br><span class="line"></span><br><span class="line">from concurrent.futures import ThreadPoolExecutor, as_completed	#允许多线程任务处理</span><br><span class="line">from loguru import logger	#日志记录</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">logger.remove()  			#移除默认的控制台输出</span><br><span class="line">logger.add(&quot;logs/app_&#123;time:YYYY-MM-DD&#125;.log&quot;, level=&quot;INFO&quot;, rotation=&quot;00:00&quot;, retention=&quot;10 days&quot;, compression=&quot;zip&quot;)</span><br><span class="line">&quot;&quot;&quot;logs/app_&#123;time:YYYY-MM-DD&#125;.log&quot;: 指定日志文件的路径和名称,会根据当天的日期来命名</span><br><span class="line">level=&quot;INFO&quot;: 只有INFO级别及以上的日志（如WARNING、ERROR等）会被记录到文件中</span><br><span class="line">rotation=&quot;00:00&quot;: 每天会创建一个新的日志文件来记录当天的日志信息。</span><br><span class="line">retention=&quot;10 days&quot;: 日志文件的保留时间为10天</span><br><span class="line">compression=&quot;zip&quot;: 日志文件的压缩方式为zip&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">MODEL_NAME = &#x27;qwen2-7b-instruct&#x27;	#模型名称</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-答案生成"><a href="#2-答案生成" class="headerlink" title="2.答案生成"></a>2.答案生成</h3><h4 id="定义函数call-qwen-api，用于调用模型"><a href="#定义函数call-qwen-api，用于调用模型" class="headerlink" title="定义函数call_qwen_api，用于调用模型"></a><strong>定义函数call_qwen_api，用于调用模型</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def call_qwen_api(MODEL_NAME, query):</span><br><span class="line">    # 调用dashscope模型推理，通过http传输的json封装返回结果</span><br><span class="line">    # 创建名为messages的列表，其中包含一个字典。这个字典表示了要发送给模型的请求消息，&#x27;role&#x27;键设置为&#x27;user&#x27;，表示消息的发送者角色，&#x27;content&#x27;键设置为query参数的值，即用户输入的查询文本 </span><br><span class="line">    messages = [</span><br><span class="line">        &#123;&#x27;role&#x27;: &#x27;user&#x27;, &#x27;content&#x27;: query&#125;]</span><br><span class="line">    response = dashscope.Generation.call(</span><br><span class="line">        MODEL_NAME,</span><br><span class="line">        messages=messages,</span><br><span class="line">        result_format=&#x27;message&#x27;,  # set the result is message format.</span><br><span class="line">    )</span><br><span class="line">    #如果请求成功，打印输出结果</span><br><span class="line">    if response.status_code == HTTPStatus.OK:</span><br><span class="line">        print(response)</span><br><span class="line">        return response[&#x27;output&#x27;][&#x27;choices&#x27;][0][&#x27;message&#x27;][&#x27;content&#x27;]</span><br><span class="line">    #如果请求失败，打印请求ID、状态码、错误码和错误消息，并抛出Exception异常</span><br><span class="line">    else:</span><br><span class="line">        print(&#x27;Request id: %s, Status code: %s, error code: %s, error message: %s&#x27; % (</span><br><span class="line">            response.request_id, response.status_code,</span><br><span class="line">            response.code, response.message</span><br><span class="line">        ))</span><br><span class="line">        raise Exception()</span><br></pre></td></tr></table></figure>
-
-<p>涉及到的python基础语法知识：列表、字典、条件语句（基础，可自行查阅python手册）</p>
-<h4 id="定义函数api-retry用于对-API-调用进行重试，直到达到最大尝试次数或成功执行为止"><a href="#定义函数api-retry用于对-API-调用进行重试，直到达到最大尝试次数或成功执行为止" class="headerlink" title="定义函数api_retry用于对 API 调用进行重试，直到达到最大尝试次数或成功执行为止"></a><strong>定义函数api_retry用于对 API 调用进行重试，直到达到最大尝试次数或成功执行为止</strong></h4><p>如果出现错误我们存储到日志文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def api_retry(MODEL_NAME, query):</span><br><span class="line">    # 最大尝试次数5次</span><br><span class="line">    max_retries = 5</span><br><span class="line">    # 再次尝试等待时间60s</span><br><span class="line">    retry_delay = 60  # in seconds</span><br><span class="line">    attempts = 0</span><br><span class="line">    while attempts &lt; max_retries:</span><br><span class="line">        try:</span><br><span class="line">            return call_qwen_api(MODEL_NAME, query)</span><br><span class="line">        except Exception as e:				</span><br><span class="line">            attempts += 1   				#捕获异常，则继续尝试</span><br><span class="line">            if attempts &lt; max_retries:</span><br><span class="line">                logger.warning(f&quot;Attempt &#123;attempts&#125; failed for text: &#123;query&#125;. Retrying in &#123;retry_delay&#125; seconds...&quot;)			   #未超过最大次数则</span><br><span class="line">                time.sleep(retry_delay)		#暂停，这个函数通常用于在重试机制中，当某个操作失败时，等待一段时间后再重试，以避免因为短时间内连续请求而导致资源耗尽或服务器压力过大</span><br><span class="line">            else:</span><br><span class="line">                logger.error(f&quot;All &#123;max_retries&#125; attempts failed for text: &#123;query&#125;. Error: &#123;e&#125;&quot;)</span><br><span class="line">                raise</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="定义prompt的模版函数get-prompt，通过字符串处理的方式拼接完整的prompt"><a href="#定义prompt的模版函数get-prompt，通过字符串处理的方式拼接完整的prompt" class="headerlink" title="定义prompt的模版函数get_prompt，通过字符串处理的方式拼接完整的prompt"></a><strong>定义prompt的模版函数get_prompt，通过字符串处理的方式拼接完整的prompt</strong></h4>]]></content>
-      <categories>
-        <category>AI大模型</category>
-      </categories>
-      <tags>
-        <tag>LLM</tag>
-        <tag>baseline</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AI大模型-1 baseline初体验</title>
     <url>/posts/6ea94fe8/</url>
     <content><![CDATA[<h1 id="大模型打卡第一天！——逻辑推理datawhale-AI夏令营"><a href="#大模型打卡第一天！——逻辑推理datawhale-AI夏令营" class="headerlink" title="大模型打卡第一天！——逻辑推理datawhale-AI夏令营"></a>大模型打卡第一天！——逻辑推理datawhale-AI夏令营</h1><p>1.体验一站式baseline</p>
@@ -136,8 +75,8 @@
         <category>AI大模型</category>
       </categories>
       <tags>
-        <tag>baseline</tag>
         <tag>逻辑推理</tag>
+        <tag>baseline</tag>
       </tags>
   </entry>
   <entry>
@@ -166,6 +105,175 @@
 <p><strong>时序图讲解</strong></p>
 <p>自动重裝载寄存器(TIMx_ARR)<br>自动重装载寄存器是预加载的,每次读写自动重装载寄存器时,实际上是通过读写预加载寄存器实现。根据TIMx CR1寄存器中的自动重装载预加载使能位(ARPE),写入预加载寄存器的内容能够立即或在每次更新事件时,传送到它的影子寄存器。当TIMx CR1寄存器的UDIS位为’0’,则每当计数器达到溢出值时,硬件发出更新事件;软件也可以产生更新事件;关于更新事件的产生，随后会有详细的介绍。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>AI大模型-2Baseline精读</title>
+    <url>/posts/5dacfb0c/</url>
+    <content><![CDATA[<h1 id="AI大模型打卡2！——Datawhale夏令营"><a href="#AI大模型打卡2！——Datawhale夏令营" class="headerlink" title="AI大模型打卡2！——Datawhale夏令营"></a>AI大模型打卡2！——Datawhale夏令营</h1><p>引言：打卡2分为两部分，第一部分为LLM的一些理论知识，二是代码的解析。打卡2主要是对打卡1的进一步理解，重点在对baseline代码的精读分析上，笔者在原代码基础上补充了很多基础知识、语法，适合新手食用。</p>
+<h2 id="一、进一步理解LLM"><a href="#一、进一步理解LLM" class="headerlink" title="一、进一步理解LLM"></a>一、进一步理解LLM</h2><p>LLM，即Large Language Model（大型语言模型），是人工智能领域，特别是自然语言处理（NLP）中的一个重要概念。LLM是指那些具有大量参数、能够处理复杂语言任务的深度学习模型，这些模型通常基于transformer结构。</p>
+<h3 id="1-Transformer结构"><a href="#1-Transformer结构" class="headerlink" title="1.Transformer结构"></a>1.Transformer结构</h3><p>Transformer模型采用编码器-解码器（Encoder-Decoder）结构。其中，编码器负责将输入序列映射为连续表示，解码器则根据编码器的输出逐步生成输出序列。</p>
+<h4 id="1-1编码器（Encoder）"><a href="#1-1编码器（Encoder）" class="headerlink" title="1.1编码器（Encoder）"></a>1.1编码器（Encoder）</h4><p>编码器由多个编码器层堆叠而成，每个编码器层包含两个主要子层：</p>
+<ol>
+<li><strong>多头自注意力机制（Multi-Head Attention）</strong>：这是Transformer模型的核心组件之一。它允许模型同时关注输入序列中不同位置的信息，从而捕捉序列中的全局依赖关系。多头自注意力机制通过多个“头”（heads）并行计算自注意力，然后将结果拼接起来，以增强模型的表达能力。</li>
+<li><strong>前馈神经网络（Feed Forward Neural Network）</strong>：这是一个简单的全连接前馈网络，用于对自注意力机制的输出进行进一步处理。它通常包括两个线性变换和一个ReLU激活函数。</li>
+</ol>
+<p>​		此外，每个子层之间还包含了残差连接（Residual Connection）和层归一化（Layer Normalization），以帮助模型在训练过程中保持稳定性。</p>
+<h4 id="1-2解码器（Decoder）"><a href="#1-2解码器（Decoder）" class="headerlink" title="1.2解码器（Decoder）"></a>1.2解码器（Decoder）</h4><p>解码器同样由多个解码器层堆叠而成，但每个解码器层包含三个主要子层：</p>
+<ol>
+<li><strong>第一个多头自注意力机制</strong>：与编码器中的自注意力机制类似，但它采用了掩码（Masking）操作来防止在预测当前位置时看到未来的信息。</li>
+<li><strong>编码器-解码器注意力机制（Encoder-Decoder Attention）</strong>：这个子层允许解码器关注编码器的输出，从而捕捉输入序列和输出序列之间的依赖关系。</li>
+<li><strong>前馈神经网络</strong>：与编码器中的前馈神经网络相同，用于对注意力机制的输出进行进一步处理。</li>
+</ol>
+<h4 id="1-3输入与输出"><a href="#1-3输入与输出" class="headerlink" title="1.3输入与输出"></a>1.3输入与输出</h4><ol>
+<li><strong>输入</strong>：Transformer的输入包括单词嵌入（Word Embedding）和位置嵌入（Positional Encoding）。单词嵌入用于将输入的单词转换为固定维度的向量表示；位置嵌入用于提供单词在序列中的位置信息，因为Transformer模型本身不依赖于序列的顺序信息。</li>
+<li><strong>输出</strong>：Transformer的输出取决于具体的任务。在机器翻译等序列到序列的任务中，解码器的输出会经过一个线性层和softmax层，以生成目标序列中每个位置的概率分布。</li>
+</ol>
+<h4 id="1-4自注意力机制（Self-Attention-Mechanism）"><a href="#1-4自注意力机制（Self-Attention-Mechanism）" class="headerlink" title="1.4自注意力机制（Self-Attention Mechanism）"></a>1.4自注意力机制（Self-Attention Mechanism）</h4><p>​		自注意力机制是Transformer模型中的关键组件。它通过计算输入序列中所有位置之间的相似度得分，来捕捉序列中的依赖关系。具体来说，自注意力机制接受三个输入：查询（Query）、键（Key）和值（Value），它们都是输入序列的线性变换结果。然后，通过计算查询与键之间的相似度得分，并将这些得分应用于值上，得到加权和作为输出。这种机制允许模型同时考虑输入序列中所有位置的信息，从而更好地捕捉全局依赖关系。</p>
+<h3 id="2-LLM与传统机器学习的区别"><a href="#2-LLM与传统机器学习的区别" class="headerlink" title="2.LLM与传统机器学习的区别"></a>2.LLM与传统机器学习的区别</h3><p>​		简而言之，LLM以其强大的生成能力、上下文理解能力和迁移学习能力在自然语言处理领域展现出巨大的潜力；而传统机器学习则以其简单高效、易于解释的特点在多个领域和场景中发挥着重要作用。</p>
+<h4 id="2-1定义与基本原理"><a href="#2-1定义与基本原理" class="headerlink" title="2.1定义与基本原理"></a>2.1定义与基本原理</h4><ul>
+<li><strong>LLM</strong>：LLM基于深度学习技术，特别是Transformer结构的大型语言模型。它通过在海量的文本数据上进行无监督学习和迁移学习，学会了理解和生成自然语言文本的能力。LLM具有强大的上下文理解能力、生成能力和迁移学习能力。</li>
+<li><strong>传统机器学习</strong>：传统机器学习是指通过算法对数据进行学习和分析，从而找到数据中的模式和规律，并利用这些模式和规律对未知数据进行预测或分类的技术。传统机器学习算法多种多样，包括但不限于决策树、支持向量机、随机森林等。</li>
+</ul>
+<h4 id="2-2数据需求与训练过程"><a href="#2-2数据需求与训练过程" class="headerlink" title="2.2数据需求与训练过程"></a>2.2数据需求与训练过程</h4><ul>
+<li><strong>LLM</strong>：LLM需要大量的文本数据进行训练，这些数据通常来自互联网上的各种文本资源。训练过程中，LLM会学习文本中的语言模式和规律，并通过无监督学习不断优化其参数。此外，LLM还具有迁移学习能力，可以在不同任务之间进行快速适应和微调。</li>
+<li><strong>传统机器学习</strong>：传统机器学习对数据的需求相对较少，可以根据具体任务的需求选择适当的数据集进行训练。训练过程中，传统机器学习算法会根据数据集中的特征进行学习和优化，以建立预测或分类模型。</li>
+</ul>
+<h4 id="2-3应用场景与性能"><a href="#2-3应用场景与性能" class="headerlink" title="2.3应用场景与性能"></a>2.3应用场景与性能</h4><ul>
+<li><strong>LLM</strong>：多任务、复杂场景处理能力强。在自然语言处理领域具有广泛的应用场景，如文本生成、信息提取、文本分类、情感分析、机器翻译等。由于其强大的生成能力和上下文理解能力，LLM在创意写作、自动摘要、对话系统等方面表现出色。此外，LLM还可以通过迁移学习快速适应不同的NLP任务，并在性能上取得显著提升。</li>
+<li><strong>传统机器学习</strong>：传统机器学习在处理复杂多变的自然语言任务时，可能表现出一定的局限性。而在信用评估、客户分类、在线广告推荐等领域中的性能稳定可靠，能够快速得到结果。</li>
+</ul>
+<h4 id="2-4计算资源与可解释性"><a href="#2-4计算资源与可解释性" class="headerlink" title="2.4计算资源与可解释性"></a>2.4计算资源与可解释性</h4><ul>
+<li><strong>LLM</strong>：由于LLM模型规模庞大且参数众多，因此需要大量的计算资源进行训练和推理。此外，LLM的决策过程往往是黑箱操作，难以解释其背后的原因和逻辑。这在一定程度上限制了LLM在某些需要高可解释性场景中的应用。</li>
+<li><strong>传统机器学习</strong>：传统机器学习算法的计算资源需求相对较低，可以在较短时间内完成训练和推理过程。此外，部分传统机器学习算法具有较好的可解释性，能够解释模型的决策过程和结果。这使得传统机器学习在某些需要高可解释性场景中具有优势。</li>
+</ul>
+<h2 id="二、baseline代码精读"><a href="#二、baseline代码精读" class="headerlink" title="二、baseline代码精读"></a>二、baseline代码精读</h2><h3 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1.环境配置"></a>1.环境配置</h3><h4 id="配置环境、配置API"><a href="#配置环境、配置API" class="headerlink" title="配置环境、配置API"></a><strong>配置环境、配置API</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install scipy openai tiktoken retry dashscope loguru</span><br><span class="line">dashscope.api_key=&quot;sk-&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="导入所需环境，引入所需的库-已注释，后续会对相关知识有所补充"><a href="#导入所需环境，引入所需的库-已注释，后续会对相关知识有所补充" class="headerlink" title="导入所需环境，引入所需的库(已注释，后续会对相关知识有所补充)"></a><strong>导入所需环境，引入所需的库(已注释，后续会对相关知识有所补充)</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import json 				#编码和解码JSON数据</span><br><span class="line">import os					#执行文件、目录、环境变量的相关操作</span><br><span class="line">from pprint import pprint	#美化输出数据结构的模块</span><br><span class="line">import re					#正则表达式</span><br><span class="line">from tqdm import tqdm		#添加一个进度提示信息</span><br><span class="line">import random				#随机</span><br><span class="line"></span><br><span class="line">import uuid					#生成唯一通识符</span><br><span class="line">import openai				#用于与OpenAI的API进行交互</span><br><span class="line">import tiktoken</span><br><span class="line">import numpy as np			#Python的一个库，用于支持大量的维度数组与矩阵运算</span><br><span class="line">import requests				#发送HTTP请求</span><br><span class="line">from retry import retry		#用于自动重试失败的函数调用</span><br><span class="line">from scipy import sparse	#scipy库中的稀疏矩阵模块，用于处理大型稀疏矩阵</span><br><span class="line">#from rank_bm25 import BM25Okapi</span><br><span class="line">#import jieba</span><br><span class="line">from http import HTTPStatus	#用于在HTTP响应中指示服务器的响应状态，如请求成功、请求错误、重定向等</span><br><span class="line">import dashscope			#引用阿里云模型服务产品</span><br><span class="line"></span><br><span class="line">from concurrent.futures import ThreadPoolExecutor, as_completed	#允许多线程任务处理</span><br><span class="line">from loguru import logger	#日志记录</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">logger.remove()  			#移除默认的控制台输出</span><br><span class="line">logger.add(&quot;logs/app_&#123;time:YYYY-MM-DD&#125;.log&quot;, level=&quot;INFO&quot;, rotation=&quot;00:00&quot;, retention=&quot;10 days&quot;, compression=&quot;zip&quot;)</span><br><span class="line">&quot;&quot;&quot;logs/app_&#123;time:YYYY-MM-DD&#125;.log&quot;: 指定日志文件的路径和名称,会根据当天的日期来命名</span><br><span class="line">level=&quot;INFO&quot;: 只有INFO级别及以上的日志（如WARNING、ERROR等）会被记录到文件中</span><br><span class="line">rotation=&quot;00:00&quot;: 每天会创建一个新的日志文件来记录当天的日志信息。</span><br><span class="line">retention=&quot;10 days&quot;: 日志文件的保留时间为10天</span><br><span class="line">compression=&quot;zip&quot;: 日志文件的压缩方式为zip&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">MODEL_NAME = &#x27;qwen2-7b-instruct&#x27;	#模型名称</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-答案生成"><a href="#2-答案生成" class="headerlink" title="2.答案生成"></a>2.答案生成</h3><h4 id="2-1大模型部分"><a href="#2-1大模型部分" class="headerlink" title="2.1大模型部分"></a>2.1大模型部分</h4><h5 id="定义函数call-qwen-api，用于调用模型"><a href="#定义函数call-qwen-api，用于调用模型" class="headerlink" title="定义函数call_qwen_api，用于调用模型"></a><strong>定义函数call_qwen_api，用于调用模型</strong></h5><p>以下涉及到的python基础语法知识：列表、字典、条件语句（均注释，基础，详细可自行查阅python手册）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def call_qwen_api(MODEL_NAME, query):</span><br><span class="line">    # 调用dashscope模型推理，通过http传输的json封装返回结果</span><br><span class="line">    # 创建名为messages的列表，其中包含一个字典。这个字典表示了要发送给模型的请求消息，&#x27;role&#x27;键设置为&#x27;user&#x27;，表示消息的发送者角色，&#x27;content&#x27;键设置为query参数的值，即用户输入的查询文本 </span><br><span class="line">    messages = [</span><br><span class="line">        &#123;&#x27;role&#x27;: &#x27;user&#x27;, &#x27;content&#x27;: query&#125;]</span><br><span class="line">    response = dashscope.Generation.call(</span><br><span class="line">        MODEL_NAME,</span><br><span class="line">        messages=messages,</span><br><span class="line">        result_format=&#x27;message&#x27;,  # set the result is message format.</span><br><span class="line">    )</span><br><span class="line">    #如果请求成功，打印输出结果</span><br><span class="line">    if response.status_code == HTTPStatus.OK:</span><br><span class="line">        print(response)</span><br><span class="line">        return response[&#x27;output&#x27;][&#x27;choices&#x27;][0][&#x27;message&#x27;][&#x27;content&#x27;]</span><br><span class="line">    #如果请求失败，打印请求ID、状态码、错误码和错误消息，并抛出Exception异常</span><br><span class="line">    else:</span><br><span class="line">        print(&#x27;Request id: %s, Status code: %s, error code: %s, error message: %s&#x27; % (</span><br><span class="line">            response.request_id, response.status_code,</span><br><span class="line">            response.code, response.message</span><br><span class="line">        ))</span><br><span class="line">        raise Exception()</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="定义函数api-retry用于对-API-调用进行重试，直到达到最大尝试次数或成功执行为止"><a href="#定义函数api-retry用于对-API-调用进行重试，直到达到最大尝试次数或成功执行为止" class="headerlink" title="定义函数api_retry用于对 API 调用进行重试，直到达到最大尝试次数或成功执行为止"></a><strong>定义函数api_retry用于对 API 调用进行重试，直到达到最大尝试次数或成功执行为止</strong></h5><p>如果出现错误我们存储到日志文件</p>
+<p>以下涉及到的python语法知识：异常处理、循环控制、日志记录以及时间控制（均注释）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def api_retry(MODEL_NAME, query):</span><br><span class="line">    # 最大尝试次数5次</span><br><span class="line">    max_retries = 5</span><br><span class="line">    # 再次尝试等待时间60s</span><br><span class="line">    retry_delay = 60  # in seconds</span><br><span class="line">    attempts = 0</span><br><span class="line">    while attempts &lt; max_retries:			#循环，try-exception结构</span><br><span class="line">        try:								#调用模型API尝试</span><br><span class="line">            return call_qwen_api(MODEL_NAME, query)</span><br><span class="line">        except Exception as e:				</span><br><span class="line">            attempts += 1   				#捕获异常，则继续尝试</span><br><span class="line">            if attempts &lt; max_retries:</span><br><span class="line">                logger.warning(f&quot;Attempt &#123;attempts&#125; failed for text: &#123;query&#125;. Retrying in &#123;retry_delay&#125; seconds...&quot;)			   </span><br><span class="line">#未超过最大次数出现错误时WARNING级别及以上的日志（如ERROR和CRITICAL）会被记录。format参数定义了日志消息的格式，包括时间戳、日志级别和消息本身</span><br><span class="line">                time.sleep(retry_delay)		</span><br><span class="line">#暂停，这个函数通常用于在重试机制中，当某个操作失败时，等待一段时间后再重试，以避免因为短时间内连续请求而导致资源耗尽或服务器压力过大</span><br><span class="line">            else:</span><br><span class="line">                logger.error(f&quot;All &#123;max_retries&#125; attempts failed for text: &#123;query&#125;. Error: &#123;e&#125;&quot;)</span><br><span class="line">                raise						#抛出异常</span><br></pre></td></tr></table></figure>
+
+<p>eg:如果所有次数用尽，请求失败结果示例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2023-04-01 12:00:00 - WARNING - Attempt 1 failed for text: some query text. Retrying in 60 seconds...  </span><br><span class="line"># ...（等待60秒）...  </span><br><span class="line">2023-04-01 12:01:00 - WARNING - Attempt 2 failed for text: some query text. Retrying in 60 seconds...  </span><br><span class="line"># ...（继续重试直到达到最大次数）...  </span><br><span class="line">2023-04-01 12:04:00 - ERROR - All 5 attempts failed for text: some query text. Error: Request id: ..., Status code: 400, error code: ..., error message: ...  </span><br><span class="line">Failed to get result: Request id: ..., Status code: 400, error code: ..., error message: ...</span><br></pre></td></tr></table></figure>
+
+<p>上述结果示例中的 <code>...</code> 为请求ID、状态码、错误码和错误消息</p>
+<h5 id="定义prompt的模版函数get-prompt，通过字符串处理的方式拼接完整的prompt"><a href="#定义prompt的模版函数get-prompt，通过字符串处理的方式拼接完整的prompt" class="headerlink" title="定义prompt的模版函数get_prompt，通过字符串处理的方式拼接完整的prompt"></a><strong>定义prompt的模版函数get_prompt，通过字符串处理的方式拼接完整的prompt</strong></h5><p>以下为该代码中定义的prompt模板，所涉及的python语法知识：列表推导式、enumerate函数（已注释）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def get_prompt(problem, question, options):</span><br><span class="line"></span><br><span class="line">    options = &#x27;\n&#x27;.join(f&quot;&#123;&#x27;ABCDEFG&#x27;[i]&#125;. &#123;o&#125;&quot; for i, o in enumerate(options))</span><br><span class="line">&#x27;&#x27;&#x27;这里使用列表推导式&#x27;\n&#x27;.join(f&quot;&#123;&#x27;ABCDEFG&#x27;[i]&#125;. &#123;o&#125;&quot; for i, o in enumerate(options))来生成选项字符串，其中每个选项前都加上了字母前缀（从A到G），并且选项之间用换行符\n分隔，使生成最多7个选项分别为A-G，且各占一行</span><br><span class="line">enumerate函数：用于将一个可遍历的数据对象（如列表、元组或字符串）组合为一个索引序列，同时列出数据和数据下标，通常用在for循环当中。在这个例子中，它被用来遍历options列表，同时获取每个选项的索引（i）和值（o）&#x27;&#x27;&#x27;</span><br><span class="line">    prompt = f&quot;&quot;&quot;你是一个逻辑推理专家，擅长解决逻辑推理问题。以下是一个逻辑推理的题目，形式为单项选择题。所有的问题都是（close-world assumption）闭世界假设，即未观测事实都为假。请逐步分析问题并在最后一行输出答案，最后一行的格式为&quot;答案是：A&quot;。题目如下：</span><br><span class="line">#以上prompt字符串构建了提示或说明文本用于告知大模型</span><br><span class="line"></span><br><span class="line">### 题目:</span><br><span class="line">&#123;problem&#125;</span><br><span class="line"></span><br><span class="line">### 问题:</span><br><span class="line">&#123;question&#125;</span><br><span class="line">&#123;options&#125;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">    # print(prompt)</span><br><span class="line">    return prompt</span><br></pre></td></tr></table></figure>
+
+<h5 id="涉及到的知识补充：Prompt提示工程（Prompt-Engineering）"><a href="#涉及到的知识补充：Prompt提示工程（Prompt-Engineering）" class="headerlink" title="涉及到的知识补充：Prompt提示工程（Prompt Engineering）"></a>涉及到的知识补充：Prompt提示工程（Prompt Engineering）</h5><p>也称为上下文提示或指令工程，是一种重要的技术和方法，主要用于指导预训练的大规模语言模型（LLMs）生成高质量、准确且有针对性的输出</p>
+<p>一个有效的Prompt通常包含以下几个关键要素：</p>
+<ol>
+<li><p><strong>引导语或指示语</strong>：明确告诉模型需要完成什么样的任务。</p>
+</li>
+<li><p><strong>上下文信息</strong>：提供必要的背景知识，帮助模型更好地理解问题。</p>
+</li>
+<li><p><strong>任务描述</strong>：明确地描述您期望模型执行的具体任务。</p>
+</li>
+<li><p><strong>输出格式指示</strong>：如果需要特定格式的输出，需要在Prompt中指明。</p>
+</li>
+<li><p><strong>角色设定</strong>：为模型定义一个角色，以缩小问题范围并减少歧义。</p>
+</li>
+</ol>
+<h4 id="2-2抽取函数"><a href="#2-2抽取函数" class="headerlink" title="2.2抽取函数"></a>2.2抽取函数</h4><h5 id="定义extract抽取函数将大语言模型生成的结果抽取成答案对应的选项"><a href="#定义extract抽取函数将大语言模型生成的结果抽取成答案对应的选项" class="headerlink" title="定义extract抽取函数将大语言模型生成的结果抽取成答案对应的选项"></a>定义extract抽取函数将大语言模型生成的结果抽取成答案对应的选项</h5><p>这里的匹配原则和prompt呼应。我们可以看到prompt要求【最后一行的格式为”答案是：A”】这样的规范，那么我们采用正则表达式re.compile方法匹配到答案对应的选项。当我们匹配为空时，我们默认选”A”。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def extract(input_text):</span><br><span class="line">    ans_pattern = re.compile(r&quot;答案是：(.)&quot;, re.S)</span><br><span class="line"></span><br><span class="line">    problems = ans_pattern.findall(input_text)</span><br><span class="line">    # print(problems)</span><br><span class="line">    if(problems == &#x27;&#x27;):</span><br><span class="line">        return &#x27;A&#x27;</span><br><span class="line">    return problems[0]</span><br></pre></td></tr></table></figure>
+
+<h5 id="涉及到的知识补充：正则表达式"><a href="#涉及到的知识补充：正则表达式" class="headerlink" title="涉及到的知识补充：正则表达式"></a>涉及到的知识补充：正则表达式</h5><p>正则表达式模式（Regular Expression Pattern）是一种特殊的字符串模式，用于描述在搜索文本时要匹配的一个或多个字符串。它们被设计为“通用的字符串搜索算法”，可以通过一种特殊的语法来定义搜索的模式。这些模式被广泛应用于文本处理、数据验证、搜索和替换等任务中。</p>
+<p>正则表达式模式由一系列字符和特殊字符（称为“元字符”）组成，这些特殊字符在正则表达式中具有特殊的含义，而不是它们字面意义上的字符。例如，<code>.</code>（点）在正则表达式中通常表示匹配除换行符之外的任何单个字符，而<code>*</code>（星号）表示匹配前面的子表达式零次或多次。</p>
+<p>下面是一些常见的正则表达式元字符和它们的含义：</p>
+<ul>
+<li><code>.</code>：匹配除换行符 <code>\n</code> 之外的任何单个字符。</li>
+<li><code>^</code>：匹配输入字符串的开始位置。</li>
+<li><code>$</code>：匹配输入字符串的结束位置。</li>
+<li><code>*</code>：匹配前面的子表达式零次或多次。</li>
+<li><code>+</code>：匹配前面的子表达式一次或多次。</li>
+<li><code>?</code>：匹配前面的子表达式零次或一次，或指明一个非贪婪限定符。</li>
+<li><code>&#123;n&#125;</code>：n 是一个非负整数。匹配确定的 n 次。</li>
+<li><code>&#123;n,&#125;</code>：n 是一个非负整数。至少匹配 n 次。</li>
+<li><code>&#123;n,m&#125;</code>：m 和 n 均为非负整数，其中n &lt;&#x3D; m。最少匹配 n 次且最多匹配 m 次。</li>
+<li><code>[xyz]</code>：字符集合。匹配所包含的任意一个字符。</li>
+<li><code>[^xyz]</code>：负值字符集合。匹配未包含的任意字符。</li>
+<li><code>\s</code>：匹配任何空白字符，包括空格、制表符、换页符等等。</li>
+<li><code>\S</code>：匹配任何非空白字符。</li>
+<li><code>\d</code>：匹配一个数字字符。等价于 <code>[0-9]</code>。</li>
+<li><code>\D</code>：匹配一个非数字字符。等价于 <code>[^0-9]</code>。</li>
+<li><code>\w</code>：匹配包括下划线的任何单词字符。等价于 <code>[A-Za-z0-9_]</code>。</li>
+<li><code>\W</code>：匹配任何非单词字符。等价于 <code>[^A-Za-z0-9_]</code>。</li>
+</ul>
+<p>在编程中，正则表达式通常通过特定的库或函数来实现，Python 中的 <code>re</code> 模块就是这样一个例子。通过使用 <code>re</code> 模块提供的函数，如 <code>search()</code>、<code>match()</code>、<code>findall()</code> 和 <code>sub()</code> 等，可以方便地在 Python 程序中应用正则表达式来执行文本搜索、替换和验证等操作</p>
+<p>以下是对Python中<code>re</code>模块中的<code>search()</code>、<code>match()</code>、<code>findall()</code>和<code>sub()</code>函数的详细解释：</p>
+<p><strong>1. <code>search(pattern, string, flags=0)</code></strong></p>
+<p><strong>用途</strong>：<br><code>search()</code>函数用于在字符串中搜索与正则表达式模式匹配的第一个位置。它会在整个字符串中查找匹配项，而不仅仅是字符串的开头。</p>
+<p><strong>参数</strong>：</p>
+<ul>
+<li><code>pattern</code>：要匹配的正则表达式模式。</li>
+<li><code>string</code>：要搜索的字符串。</li>
+<li><code>flags</code>：可选参数，用于控制正则表达式的匹配方式，如是否忽略大小写、是否多行匹配等。默认为0，表示没有特殊标志。</li>
+</ul>
+<p><strong>返回值</strong>：</p>
+<ul>
+<li>如果找到匹配项，返回一个匹配对象（Match object），该对象包含有关匹配的信息，如匹配的位置、匹配的文本等。</li>
+<li>如果没有找到匹配项，返回<code>None</code>。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re  </span><br><span class="line">  </span><br><span class="line">pattern = <span class="string">&#x27;world&#x27;</span>  </span><br><span class="line">string = <span class="string">&#x27;Hello, world! This is a test.&#x27;</span>  </span><br><span class="line"><span class="keyword">match</span> = re.search(pattern, string)  </span><br><span class="line"><span class="keyword">if</span> <span class="keyword">match</span>:  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Found:&quot;</span>, <span class="keyword">match</span>.group())  <span class="comment"># 输出: Found: world  </span></span><br><span class="line"><span class="keyword">else</span>:  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Not found&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. <code>match(pattern, string, flags=0)</code></strong></p>
+<p><strong>用途</strong>：<br><code>match()</code>函数尝试从字符串的起始位置开始匹配一个正则表达式，如果不是起始位置匹配成功的话，<code>match()</code>就返回<code>None</code>。</p>
+<p><strong>参数</strong>：<br>与<code>search()</code>相同。</p>
+<p><strong>返回值</strong>：</p>
+<ul>
+<li>如果字符串的起始位置与正则表达式匹配，返回一个匹配对象。</li>
+<li>否则返回<code>None</code>。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re  </span><br><span class="line">  </span><br><span class="line">pattern = <span class="string">&#x27;Hello&#x27;</span>  </span><br><span class="line">string = <span class="string">&#x27;Hello, world! This is a test.&#x27;</span>  </span><br><span class="line"><span class="keyword">match</span> = re.<span class="keyword">match</span>(pattern, string)  </span><br><span class="line"><span class="keyword">if</span> <span class="keyword">match</span>:  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Found:&quot;</span>, <span class="keyword">match</span>.group())  <span class="comment"># 输出: Found: Hello  </span></span><br><span class="line"><span class="keyword">else</span>:  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Not found&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. <code>findall(pattern, string, flags=0)</code></strong></p>
+<p><strong>用途</strong>：<br><code>findall()</code>函数在字符串中查找所有与正则表达式匹配的非重叠匹配项，并返回一个列表。</p>
+<p><strong>参数</strong>：<br>与<code>search()</code>相同。</p>
+<p><strong>返回值</strong>：</p>
+<ul>
+<li>返回一个列表，包含所有匹配项。如果正则表达式包含分组，则返回的是一个元组的列表，每个元组包含一个分组内的匹配项。</li>
+<li>如果没有找到任何匹配项，返回一个空列表。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re  </span><br><span class="line">  </span><br><span class="line">pattern = <span class="string">r&#x27;\b\w+\b&#x27;</span>  </span><br><span class="line">string = <span class="string">&#x27;Hello, world! This is a test.&#x27;</span>  </span><br><span class="line">words = re.findall(pattern, string)  </span><br><span class="line"><span class="built_in">print</span>(words)  <span class="comment"># 输出: [&#x27;Hello&#x27;, &#x27;world&#x27;, &#x27;This&#x27;, &#x27;is&#x27;, &#x27;a&#x27;, &#x27;test&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>4. <code>sub(pattern, repl, string, count=0, flags=0)</code></strong></p>
+<p><strong>用途</strong>：<br><code>sub()</code>函数用于执行正则表达式的替换操作，可以在字符串中搜索匹配某个正则表达式模式的部分，并将其替换为指定的内容。</p>
+<p><strong>参数</strong>：</p>
+<ul>
+<li><code>pattern</code>：要匹配的正则表达式模式。</li>
+<li><code>repl</code>：用于替换匹配到的部分的字符串或函数。如果是一个字符串，则其中的反斜杠转义字符将被处理；如果是一个函数，则该函数将被调用，并且它的返回值将用作替换字符串。</li>
+<li><code>string</code>：要进行替换操作的原始字符串。</li>
+<li><code>count</code>：可选参数，指定最多替换次数，默认为0，表示替换所有匹配到的部分。</li>
+<li><code>flags</code>：可选参数，用于控制正则表达式的匹配方式。</li>
+</ul>
+<p><strong>返回值</strong>：</p>
+<ul>
+<li>返回替换后的字符串。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re  </span><br><span class="line">  </span><br><span class="line">pattern = <span class="string">&#x27;world&#x27;</span>  </span><br><span class="line">repl = <span class="string">&#x27;Python&#x27;</span>  </span><br><span class="line">string = <span class="string">&#x27;Hello, world! This is a test.&#x27;</span>  </span><br><span class="line">new_string = re.sub(pattern, repl, string)  </span><br><span class="line"><span class="built_in">print</span>(new_string)  <span class="comment"># 输出: Hello, Python! This is a test.</span></span><br></pre></td></tr></table></figure>
+
+<p>这四个函数是Python中处理正则表达式时最常用的工具，它们各自有不同的用途和行为，但共同构成了强大的文本处理能力。</p>
+<p>未完待续</p>
+]]></content>
+      <categories>
+        <category>AI大模型</category>
+      </categories>
+      <tags>
+        <tag>baseline</tag>
+        <tag>LLM</tag>
+      </tags>
   </entry>
   <entry>
     <title>My first blog !</title>
