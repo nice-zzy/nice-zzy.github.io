@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AI大模型-2Baseline精读</title>
+    <url>/posts/5dacfb0c/</url>
+    <content><![CDATA[<h1 id="AI大模型打卡2！——Datawhale夏令营"><a href="#AI大模型打卡2！——Datawhale夏令营" class="headerlink" title="AI大模型打卡2！——Datawhale夏令营"></a>AI大模型打卡2！——Datawhale夏令营</h1><p>引言：打卡2分为两部分，第一部分为LLM的一些理论知识，二是代码的解析。打卡2主要是对打卡1的进一步理解，重点在对baseline代码的精读分析上，笔者在原代码基础上补充了很多基础知识、语法，适合新手食用。</p>
+<h2 id="一、进一步理解LLM"><a href="#一、进一步理解LLM" class="headerlink" title="一、进一步理解LLM"></a>一、进一步理解LLM</h2><p>LLM，即Large Language Model（大型语言模型），是人工智能领域，特别是自然语言处理（NLP）中的一个重要概念。LLM是指那些具有大量参数、能够处理复杂语言任务的深度学习模型，这些模型通常基于transformer结构。</p>
+<h3 id="1-Transformer结构"><a href="#1-Transformer结构" class="headerlink" title="1.Transformer结构"></a>1.Transformer结构</h3><p>Transformer模型采用编码器-解码器（Encoder-Decoder）结构。其中，编码器负责将输入序列映射为连续表示，解码器则根据编码器的输出逐步生成输出序列。</p>
+<h4 id="1-1编码器（Encoder）"><a href="#1-1编码器（Encoder）" class="headerlink" title="1.1编码器（Encoder）"></a>1.1编码器（Encoder）</h4><p>编码器由多个编码器层堆叠而成，每个编码器层包含两个主要子层：</p>
+<ol>
+<li><strong>多头自注意力机制（Multi-Head Attention）</strong>：这是Transformer模型的核心组件之一。它允许模型同时关注输入序列中不同位置的信息，从而捕捉序列中的全局依赖关系。多头自注意力机制通过多个“头”（heads）并行计算自注意力，然后将结果拼接起来，以增强模型的表达能力。</li>
+<li><strong>前馈神经网络（Feed Forward Neural Network）</strong>：这是一个简单的全连接前馈网络，用于对自注意力机制的输出进行进一步处理。它通常包括两个线性变换和一个ReLU激活函数。</li>
+</ol>
+<p>​		此外，每个子层之间还包含了残差连接（Residual Connection）和层归一化（Layer Normalization），以帮助模型在训练过程中保持稳定性。</p>
+<h4 id="1-2解码器（Decoder）"><a href="#1-2解码器（Decoder）" class="headerlink" title="1.2解码器（Decoder）"></a>1.2解码器（Decoder）</h4><p>解码器同样由多个解码器层堆叠而成，但每个解码器层包含三个主要子层：</p>
+<ol>
+<li><strong>第一个多头自注意力机制</strong>：与编码器中的自注意力机制类似，但它采用了掩码（Masking）操作来防止在预测当前位置时看到未来的信息。</li>
+<li><strong>编码器-解码器注意力机制（Encoder-Decoder Attention）</strong>：这个子层允许解码器关注编码器的输出，从而捕捉输入序列和输出序列之间的依赖关系。</li>
+<li><strong>前馈神经网络</strong>：与编码器中的前馈神经网络相同，用于对注意力机制的输出进行进一步处理。</li>
+</ol>
+<h4 id="1-3输入与输出"><a href="#1-3输入与输出" class="headerlink" title="1.3输入与输出"></a>1.3输入与输出</h4><ol>
+<li><strong>输入</strong>：Transformer的输入包括单词嵌入（Word Embedding）和位置嵌入（Positional Encoding）。单词嵌入用于将输入的单词转换为固定维度的向量表示；位置嵌入用于提供单词在序列中的位置信息，因为Transformer模型本身不依赖于序列的顺序信息。</li>
+<li><strong>输出</strong>：Transformer的输出取决于具体的任务。在机器翻译等序列到序列的任务中，解码器的输出会经过一个线性层和softmax层，以生成目标序列中每个位置的概率分布。</li>
+</ol>
+<h4 id="1-4自注意力机制（Self-Attention-Mechanism）"><a href="#1-4自注意力机制（Self-Attention-Mechanism）" class="headerlink" title="1.4自注意力机制（Self-Attention Mechanism）"></a>1.4自注意力机制（Self-Attention Mechanism）</h4><p>​		自注意力机制是Transformer模型中的关键组件。它通过计算输入序列中所有位置之间的相似度得分，来捕捉序列中的依赖关系。具体来说，自注意力机制接受三个输入：查询（Query）、键（Key）和值（Value），它们都是输入序列的线性变换结果。然后，通过计算查询与键之间的相似度得分，并将这些得分应用于值上，得到加权和作为输出。这种机制允许模型同时考虑输入序列中所有位置的信息，从而更好地捕捉全局依赖关系。</p>
+<h3 id="2-LLM与传统机器学习的区别"><a href="#2-LLM与传统机器学习的区别" class="headerlink" title="2.LLM与传统机器学习的区别"></a>2.LLM与传统机器学习的区别</h3><p>​		简而言之，LLM以其强大的生成能力、上下文理解能力和迁移学习能力在自然语言处理领域展现出巨大的潜力；而传统机器学习则以其简单高效、易于解释的特点在多个领域和场景中发挥着重要作用。</p>
+<h4 id="2-1定义与基本原理"><a href="#2-1定义与基本原理" class="headerlink" title="2.1定义与基本原理"></a>2.1定义与基本原理</h4><ul>
+<li><strong>LLM</strong>：LLM基于深度学习技术，特别是Transformer结构的大型语言模型。它通过在海量的文本数据上进行无监督学习和迁移学习，学会了理解和生成自然语言文本的能力。LLM具有强大的上下文理解能力、生成能力和迁移学习能力。</li>
+<li><strong>传统机器学习</strong>：传统机器学习是指通过算法对数据进行学习和分析，从而找到数据中的模式和规律，并利用这些模式和规律对未知数据进行预测或分类的技术。传统机器学习算法多种多样，包括但不限于决策树、支持向量机、随机森林等。</li>
+</ul>
+<h4 id="2-2数据需求与训练过程"><a href="#2-2数据需求与训练过程" class="headerlink" title="2.2数据需求与训练过程"></a>2.2数据需求与训练过程</h4><ul>
+<li><strong>LLM</strong>：LLM需要大量的文本数据进行训练，这些数据通常来自互联网上的各种文本资源。训练过程中，LLM会学习文本中的语言模式和规律，并通过无监督学习不断优化其参数。此外，LLM还具有迁移学习能力，可以在不同任务之间进行快速适应和微调。</li>
+<li><strong>传统机器学习</strong>：传统机器学习对数据的需求相对较少，可以根据具体任务的需求选择适当的数据集进行训练。训练过程中，传统机器学习算法会根据数据集中的特征进行学习和优化，以建立预测或分类模型。</li>
+</ul>
+<h4 id="2-3应用场景与性能"><a href="#2-3应用场景与性能" class="headerlink" title="2.3应用场景与性能"></a>2.3应用场景与性能</h4><ul>
+<li><strong>LLM</strong>：多任务、复杂场景处理能力强。在自然语言处理领域具有广泛的应用场景，如文本生成、信息提取、文本分类、情感分析、机器翻译等。由于其强大的生成能力和上下文理解能力，LLM在创意写作、自动摘要、对话系统等方面表现出色。此外，LLM还可以通过迁移学习快速适应不同的NLP任务，并在性能上取得显著提升。</li>
+<li><strong>传统机器学习</strong>：传统机器学习在处理复杂多变的自然语言任务时，可能表现出一定的局限性。而在信用评估、客户分类、在线广告推荐等领域中的性能稳定可靠，能够快速得到结果。</li>
+</ul>
+<h4 id="2-4计算资源与可解释性"><a href="#2-4计算资源与可解释性" class="headerlink" title="2.4计算资源与可解释性"></a>2.4计算资源与可解释性</h4><ul>
+<li><strong>LLM</strong>：由于LLM模型规模庞大且参数众多，因此需要大量的计算资源进行训练和推理。此外，LLM的决策过程往往是黑箱操作，难以解释其背后的原因和逻辑。这在一定程度上限制了LLM在某些需要高可解释性场景中的应用。</li>
+<li><strong>传统机器学习</strong>：传统机器学习算法的计算资源需求相对较低，可以在较短时间内完成训练和推理过程。此外，部分传统机器学习算法具有较好的可解释性，能够解释模型的决策过程和结果。这使得传统机器学习在某些需要高可解释性场景中具有优势。</li>
+</ul>
+<h2 id="二、baseline代码精读"><a href="#二、baseline代码精读" class="headerlink" title="二、baseline代码精读"></a>二、baseline代码精读</h2><h3 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1.环境配置"></a>1.环境配置</h3><h4 id="配置环境、配置API"><a href="#配置环境、配置API" class="headerlink" title="配置环境、配置API"></a><strong>配置环境、配置API</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install scipy openai tiktoken retry dashscope loguru</span><br><span class="line">dashscope.api_key=&quot;sk-&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="导入所需环境，引入所需的库-已注释，后续会对相关知识有所补充"><a href="#导入所需环境，引入所需的库-已注释，后续会对相关知识有所补充" class="headerlink" title="导入所需环境，引入所需的库(已注释，后续会对相关知识有所补充)"></a><strong>导入所需环境，引入所需的库(已注释，后续会对相关知识有所补充)</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import json 				#编码和解码JSON数据</span><br><span class="line">import os					#执行文件、目录、环境变量的相关操作</span><br><span class="line">from pprint import pprint	#美化输出数据结构的模块</span><br><span class="line">import re					#正则表达式</span><br><span class="line">from tqdm import tqdm		#添加一个进度提示信息</span><br><span class="line">import random				#随机</span><br><span class="line"></span><br><span class="line">import uuid					#生成唯一通识符</span><br><span class="line">import openai				#用于与OpenAI的API进行交互</span><br><span class="line">import tiktoken</span><br><span class="line">import numpy as np			#Python的一个库，用于支持大量的维度数组与矩阵运算</span><br><span class="line">import requests				#发送HTTP请求</span><br><span class="line">from retry import retry		#用于自动重试失败的函数调用</span><br><span class="line">from scipy import sparse	#scipy库中的稀疏矩阵模块，用于处理大型稀疏矩阵</span><br><span class="line">#from rank_bm25 import BM25Okapi</span><br><span class="line">#import jieba</span><br><span class="line">from http import HTTPStatus	#用于在HTTP响应中指示服务器的响应状态，如请求成功、请求错误、重定向等</span><br><span class="line">import dashscope			#引用阿里云模型服务产品</span><br><span class="line"></span><br><span class="line">from concurrent.futures import ThreadPoolExecutor, as_completed	#允许多线程任务处理</span><br><span class="line">from loguru import logger	#日志记录</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">logger.remove()  			#移除默认的控制台输出</span><br><span class="line">logger.add(&quot;logs/app_&#123;time:YYYY-MM-DD&#125;.log&quot;, level=&quot;INFO&quot;, rotation=&quot;00:00&quot;, retention=&quot;10 days&quot;, compression=&quot;zip&quot;)</span><br><span class="line">&quot;&quot;&quot;logs/app_&#123;time:YYYY-MM-DD&#125;.log&quot;: 指定日志文件的路径和名称,会根据当天的日期来命名</span><br><span class="line">level=&quot;INFO&quot;: 只有INFO级别及以上的日志（如WARNING、ERROR等）会被记录到文件中</span><br><span class="line">rotation=&quot;00:00&quot;: 每天会创建一个新的日志文件来记录当天的日志信息。</span><br><span class="line">retention=&quot;10 days&quot;: 日志文件的保留时间为10天</span><br><span class="line">compression=&quot;zip&quot;: 日志文件的压缩方式为zip&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">MODEL_NAME = &#x27;qwen2-7b-instruct&#x27;	#模型名称</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-答案生成"><a href="#2-答案生成" class="headerlink" title="2.答案生成"></a>2.答案生成</h3><h4 id="定义函数call-qwen-api，用于调用模型"><a href="#定义函数call-qwen-api，用于调用模型" class="headerlink" title="定义函数call_qwen_api，用于调用模型"></a><strong>定义函数call_qwen_api，用于调用模型</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def call_qwen_api(MODEL_NAME, query):</span><br><span class="line">    # 调用dashscope模型推理，通过http传输的json封装返回结果</span><br><span class="line">    # 创建名为messages的列表，其中包含一个字典。这个字典表示了要发送给模型的请求消息，&#x27;role&#x27;键设置为&#x27;user&#x27;，表示消息的发送者角色，&#x27;content&#x27;键设置为query参数的值，即用户输入的查询文本 </span><br><span class="line">    messages = [</span><br><span class="line">        &#123;&#x27;role&#x27;: &#x27;user&#x27;, &#x27;content&#x27;: query&#125;]</span><br><span class="line">    response = dashscope.Generation.call(</span><br><span class="line">        MODEL_NAME,</span><br><span class="line">        messages=messages,</span><br><span class="line">        result_format=&#x27;message&#x27;,  # set the result is message format.</span><br><span class="line">    )</span><br><span class="line">    #如果请求成功，打印输出结果</span><br><span class="line">    if response.status_code == HTTPStatus.OK:</span><br><span class="line">        print(response)</span><br><span class="line">        return response[&#x27;output&#x27;][&#x27;choices&#x27;][0][&#x27;message&#x27;][&#x27;content&#x27;]</span><br><span class="line">    #如果请求失败，打印请求ID、状态码、错误码和错误消息，并抛出Exception异常</span><br><span class="line">    else:</span><br><span class="line">        print(&#x27;Request id: %s, Status code: %s, error code: %s, error message: %s&#x27; % (</span><br><span class="line">            response.request_id, response.status_code,</span><br><span class="line">            response.code, response.message</span><br><span class="line">        ))</span><br><span class="line">        raise Exception()</span><br></pre></td></tr></table></figure>
+
+<p>涉及到的python基础语法知识：列表、字典、条件语句（基础，可自行查阅python手册）</p>
+<h4 id="定义函数api-retry用于对-API-调用进行重试，直到达到最大尝试次数或成功执行为止"><a href="#定义函数api-retry用于对-API-调用进行重试，直到达到最大尝试次数或成功执行为止" class="headerlink" title="定义函数api_retry用于对 API 调用进行重试，直到达到最大尝试次数或成功执行为止"></a><strong>定义函数api_retry用于对 API 调用进行重试，直到达到最大尝试次数或成功执行为止</strong></h4><p>如果出现错误我们存储到日志文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def api_retry(MODEL_NAME, query):</span><br><span class="line">    # 最大尝试次数5次</span><br><span class="line">    max_retries = 5</span><br><span class="line">    # 再次尝试等待时间60s</span><br><span class="line">    retry_delay = 60  # in seconds</span><br><span class="line">    attempts = 0</span><br><span class="line">    while attempts &lt; max_retries:</span><br><span class="line">        try:</span><br><span class="line">            return call_qwen_api(MODEL_NAME, query)</span><br><span class="line">        except Exception as e:				</span><br><span class="line">            attempts += 1   				#捕获异常，则继续尝试</span><br><span class="line">            if attempts &lt; max_retries:</span><br><span class="line">                logger.warning(f&quot;Attempt &#123;attempts&#125; failed for text: &#123;query&#125;. Retrying in &#123;retry_delay&#125; seconds...&quot;)			   #未超过最大次数则</span><br><span class="line">                time.sleep(retry_delay)		#暂停，这个函数通常用于在重试机制中，当某个操作失败时，等待一段时间后再重试，以避免因为短时间内连续请求而导致资源耗尽或服务器压力过大</span><br><span class="line">            else:</span><br><span class="line">                logger.error(f&quot;All &#123;max_retries&#125; attempts failed for text: &#123;query&#125;. Error: &#123;e&#125;&quot;)</span><br><span class="line">                raise</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="定义prompt的模版函数get-prompt，通过字符串处理的方式拼接完整的prompt"><a href="#定义prompt的模版函数get-prompt，通过字符串处理的方式拼接完整的prompt" class="headerlink" title="定义prompt的模版函数get_prompt，通过字符串处理的方式拼接完整的prompt"></a><strong>定义prompt的模版函数get_prompt，通过字符串处理的方式拼接完整的prompt</strong></h4>]]></content>
+      <categories>
+        <category>AI大模型</category>
+      </categories>
+      <tags>
+        <tag>LLM</tag>
+        <tag>baseline</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AI大模型-1 baseline初体验</title>
     <url>/posts/6ea94fe8/</url>
     <content><![CDATA[<h1 id="大模型打卡第一天！——逻辑推理datawhale-AI夏令营"><a href="#大模型打卡第一天！——逻辑推理datawhale-AI夏令营" class="headerlink" title="大模型打卡第一天！——逻辑推理datawhale-AI夏令营"></a>大模型打卡第一天！——逻辑推理datawhale-AI夏令营</h1><p>1.体验一站式baseline</p>
@@ -72,12 +133,39 @@
 <p>深度学习模型的一个关键优势在于它们能够自动学习特征表示，不需要人工进行特征工程，这对于逻辑推理问题尤为重要，因为这些问题可能涉及到复杂的语言模式和隐含的逻辑关系。此外，预训练模型（如BERT）的出现使得模型能够在大量未标记文本上进行预训练，然后再针对具体任务进行微调，这种迁移学习的能力极大地提高了模型的性能和泛化能力。</p>
 ]]></content>
       <categories>
-        <category>大模型</category>
+        <category>AI大模型</category>
       </categories>
       <tags>
-        <tag>逻辑推理</tag>
         <tag>baseline</tag>
+        <tag>逻辑推理</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/posts/0/</url>
+    <content><![CDATA[<h1 id="TIM（Timer）定时器"><a href="#TIM（Timer）定时器" class="headerlink" title="TIM（Timer）定时器"></a>TIM（Timer）定时器</h1><p><img src="https://img-blog.csdnimg.cn/e6c242361263453ba8691f1292842f03.png" alt="在这里插入图片描述"></p>
+<p>为什么在72MHz计数时钟下可以实现最大59.65s的定时?<br>72M&#x2F;65536&#x2F;65536，得到的是中断频率，然后取倒数，就是59.65秒多，大家可以自己算一下。<br>详细解释：在定时器中,预分频器和计数器都是16位的,所以它们的最大值是65535,而不是65536。</p>
+<p>预分频器的最大值决定了计数时钟的频率,而计数器的最大值决定了定时器的最大计数周期。因此,如果预分频器和计数器的最大值都设置为65535,那么定时器的最大时间就是72MHz&#x2F;65536&#x2F;65536，得到的是中断频率，倒数就是中断时间。【最大值是65536，但计数是从0~65535】<br><img src="https://img-blog.csdnimg.cn/0c44cedb211b40ef85e0be30d0e321c0.png" alt="定时器类型"></p>
+<h2 id="1-1-基本定时器（TIM6和TIM7）"><a href="#1-1-基本定时器（TIM6和TIM7）" class="headerlink" title="1.1 基本定时器（TIM6和TIM7）"></a>1.1 基本定时器（TIM6和TIM7）</h2><p><img src="https://img-blog.csdnimg.cn/4d5def101ec94a80b471cbe15a858aaf.png" alt="基本定时器"></p>
+<h3 id="1-1-1-时基单元"><a href="#1-1-1-时基单元" class="headerlink" title="1.1_1_ 时基单元"></a>1.1_1_ 时基单元</h3><p><img src="https://img-blog.csdnimg.cn/d992b082b9cb400f94fc7760e84d1d68.png" alt="在这里插入图片描述"></p>
+<p>这个可编程定时器的主要部分是一个带有自动重装载的16位累加计数器,计数器的时钟通过一个预分频器得到。<br>软件可以读写计数器、自动重装载寄存器和预分频寄存器,即使计数器运行时也可以操作。时基单元包含：</p>
+<ul>
+<li><p>预分频寄存器(TIMx_PSC)</p>
+<p>预分频器</p>
+<p>预分频可以以系数介于1至65536之间的任意数值对计数器时钟分频,就是对输入的基淮频率提前进行一个分频的操作。它是通过一个16位寄存器(TIMx-PSC)的计数实现分频。因为TIMx-PSC控制寄存器具有缓冲,可以在运行过程中改变它的数值,新的预分频数值将在下一个更新事件时起作用。</p>
+<p><strong>假设这个寄存器写0，就是不分频，或者说是1分频，这时候输出频率&#x3D;输入频率&#x3D;72MHz；如果预分频器写1，那就是2分频，输出频率&#x3D;输入频率&#x2F;2&#x3D;36MHz,所以预分频器的值和实际的分频系数相差了1，即实际分频系数&#x3D;预分频器的值+1。</strong></p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/1ca319768b75449c88f39d92f7df8713.png" alt="在这里插入图片描述"></p>
+<p>注意：实际的设置计数器使能信号CNT_EN相对于CEN滞后一个时钟周期。</p>
+<ul>
+<li><p>计数器寄存器(TIMx_CNT)</p>
+<p>计数器由预分频输出CK_CNT驱动，设置TIMx_CR1寄存器中的计数器使能位(CEN)使能计数器计数。这个计数器可以对预分频后的计数时钟进行计数,计数时钟每来一个上升滑，计数器的值就加1,由于这个计数器也是16位的，所以里面的值可以从0一直加到65535，如果再加的话，计数器就会回到0重新开始。所以计数器的值在计时过程中会不断地自增运行，当自增运行到目标值时，产生中断，那就完成了定时的任务，所以现在还需要一个存储目标值的寄存器，那就是自动重装寄存器了。</p>
+</li>
+</ul>
+<p><strong>时序图讲解</strong></p>
+<p>自动重裝载寄存器(TIMx_ARR)<br>自动重装载寄存器是预加载的,每次读写自动重装载寄存器时,实际上是通过读写预加载寄存器实现。根据TIMx CR1寄存器中的自动重装载预加载使能位(ARPE),写入预加载寄存器的内容能够立即或在每次更新事件时,传送到它的影子寄存器。当TIMx CR1寄存器的UDIS位为’0’,则每当计数器达到溢出值时,硬件发出更新事件;软件也可以产生更新事件;关于更新事件的产生，随后会有详细的介绍。</p>
+]]></content>
   </entry>
   <entry>
     <title>My first blog !</title>
