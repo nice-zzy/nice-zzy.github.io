@@ -80,7 +80,51 @@
       </tags>
   </entry>
   <entry>
-    <title>Andrew ng——机器学习</title>
+    <title>AI大模型-3Baseline优化加速</title>
+    <url>/posts/47240e3d/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>My first blog !</title>
+    <url>/posts/c86c5a61/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本篇文章里我将简单介绍我的个人博客搭建过程</p>
+]]></content>
+      <tags>
+        <tag>github</tag>
+        <tag>git</tag>
+        <tag>node.js</tag>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/posts/0/</url>
+    <content><![CDATA[<h1 id="TIM（Timer）定时器"><a href="#TIM（Timer）定时器" class="headerlink" title="TIM（Timer）定时器"></a>TIM（Timer）定时器</h1><p><img src="https://img-blog.csdnimg.cn/e6c242361263453ba8691f1292842f03.png" alt="在这里插入图片描述"></p>
+<p>为什么在72MHz计数时钟下可以实现最大59.65s的定时?<br>72M&#x2F;65536&#x2F;65536，得到的是中断频率，然后取倒数，就是59.65秒多，大家可以自己算一下。<br>详细解释：在定时器中,预分频器和计数器都是16位的,所以它们的最大值是65535,而不是65536。</p>
+<p>预分频器的最大值决定了计数时钟的频率,而计数器的最大值决定了定时器的最大计数周期。因此,如果预分频器和计数器的最大值都设置为65535,那么定时器的最大时间就是72MHz&#x2F;65536&#x2F;65536，得到的是中断频率，倒数就是中断时间。【最大值是65536，但计数是从0~65535】<br><img src="https://img-blog.csdnimg.cn/0c44cedb211b40ef85e0be30d0e321c0.png" alt="定时器类型"></p>
+<h2 id="1-1-基本定时器（TIM6和TIM7）"><a href="#1-1-基本定时器（TIM6和TIM7）" class="headerlink" title="1.1 基本定时器（TIM6和TIM7）"></a>1.1 基本定时器（TIM6和TIM7）</h2><p><img src="https://img-blog.csdnimg.cn/4d5def101ec94a80b471cbe15a858aaf.png" alt="基本定时器"></p>
+<h3 id="1-1-1-时基单元"><a href="#1-1-1-时基单元" class="headerlink" title="1.1_1_ 时基单元"></a>1.1_1_ 时基单元</h3><p><img src="https://img-blog.csdnimg.cn/d992b082b9cb400f94fc7760e84d1d68.png" alt="在这里插入图片描述"></p>
+<p>这个可编程定时器的主要部分是一个带有自动重装载的16位累加计数器,计数器的时钟通过一个预分频器得到。<br>软件可以读写计数器、自动重装载寄存器和预分频寄存器,即使计数器运行时也可以操作。时基单元包含：</p>
+<ul>
+<li><p>预分频寄存器(TIMx_PSC)</p>
+<p>预分频器</p>
+<p>预分频可以以系数介于1至65536之间的任意数值对计数器时钟分频,就是对输入的基淮频率提前进行一个分频的操作。它是通过一个16位寄存器(TIMx-PSC)的计数实现分频。因为TIMx-PSC控制寄存器具有缓冲,可以在运行过程中改变它的数值,新的预分频数值将在下一个更新事件时起作用。</p>
+<p><strong>假设这个寄存器写0，就是不分频，或者说是1分频，这时候输出频率&#x3D;输入频率&#x3D;72MHz；如果预分频器写1，那就是2分频，输出频率&#x3D;输入频率&#x2F;2&#x3D;36MHz,所以预分频器的值和实际的分频系数相差了1，即实际分频系数&#x3D;预分频器的值+1。</strong></p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/1ca319768b75449c88f39d92f7df8713.png" alt="在这里插入图片描述"></p>
+<p>注意：实际的设置计数器使能信号CNT_EN相对于CEN滞后一个时钟周期。</p>
+<ul>
+<li><p>计数器寄存器(TIMx_CNT)</p>
+<p>计数器由预分频输出CK_CNT驱动，设置TIMx_CR1寄存器中的计数器使能位(CEN)使能计数器计数。这个计数器可以对预分频后的计数时钟进行计数,计数时钟每来一个上升滑，计数器的值就加1,由于这个计数器也是16位的，所以里面的值可以从0一直加到65535，如果再加的话，计数器就会回到0重新开始。所以计数器的值在计时过程中会不断地自增运行，当自增运行到目标值时，产生中断，那就完成了定时的任务，所以现在还需要一个存储目标值的寄存器，那就是自动重装寄存器了。</p>
+</li>
+</ul>
+<p><strong>时序图讲解</strong></p>
+<p>自动重裝载寄存器(TIMx_ARR)<br>自动重装载寄存器是预加载的,每次读写自动重装载寄存器时,实际上是通过读写预加载寄存器实现。根据TIMx CR1寄存器中的自动重装载预加载使能位(ARPE),写入预加载寄存器的内容能够立即或在每次更新事件时,传送到它的影子寄存器。当TIMx CR1寄存器的UDIS位为’0’,则每当计数器达到溢出值时,硬件发出更新事件;软件也可以产生更新事件;关于更新事件的产生，随后会有详细的介绍。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Andrew ng——机器学习通识及代价函数</title>
     <url>/posts/b2e49bf5/</url>
     <content><![CDATA[<h1 id="吴恩达机器学习1"><a href="#吴恩达机器学习1" class="headerlink" title="吴恩达机器学习1"></a>吴恩达机器学习1</h1><h2 id="1-1-什么是机器学习"><a href="#1-1-什么是机器学习" class="headerlink" title="1.1 什么是机器学习"></a>1.1 什么是机器学习</h2><p>​	1.Field of study that gives computers the ability to learn without being explicitly programmed. (Arthur Samuel)<br>​	2.A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E. (Tom Mitchell)<br>无论哪种定义，通俗地讲就是计算机通过经验学习进行性能优化</p>
 <h2 id="1-2监督学习"><a href="#1-2监督学习" class="headerlink" title="1.2监督学习"></a>1.2监督学习</h2><p><strong>监督学习</strong>即给算法一个有标签集且包含正确答案的数据集，也就是说我们知道output、input以及二者之间的关系，我们期望找到二者之间的映射关系，从而对一个新的数据作出预测分析。可分为两类：</p>
@@ -133,10 +177,32 @@
 
 <p>​	下图取值位于三维图形的最低点，在二维图形上位于等高线的中心。对应的假设函数 h(x) 直线如左图。虽然拟合数据有一些误差（蓝色竖线），但是已经很接近最小值了。</p>
 <img src="/posts/b2e49bf5/542362-20181027065851220-2060487712.png" alt="拟合3" style="zoom:67%;">
+
+
+
+<p>以上为机器学习通识及代价函数相关知识，下一节更新内容为代价函数优化算法。</p>
 ]]></content>
       <tags>
-        <tag>吴恩达 -机器学习 -machine learning</tag>
+        <tag>吴恩达 -机器学习 -代价函数 -线性回归</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/4a17b156/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>AI大模型-2Baseline精读</title>
@@ -306,68 +372,6 @@
       <tags>
         <tag>baseline</tag>
         <tag>LLM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/4a17b156/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/posts/0/</url>
-    <content><![CDATA[<h1 id="TIM（Timer）定时器"><a href="#TIM（Timer）定时器" class="headerlink" title="TIM（Timer）定时器"></a>TIM（Timer）定时器</h1><p><img src="https://img-blog.csdnimg.cn/e6c242361263453ba8691f1292842f03.png" alt="在这里插入图片描述"></p>
-<p>为什么在72MHz计数时钟下可以实现最大59.65s的定时?<br>72M&#x2F;65536&#x2F;65536，得到的是中断频率，然后取倒数，就是59.65秒多，大家可以自己算一下。<br>详细解释：在定时器中,预分频器和计数器都是16位的,所以它们的最大值是65535,而不是65536。</p>
-<p>预分频器的最大值决定了计数时钟的频率,而计数器的最大值决定了定时器的最大计数周期。因此,如果预分频器和计数器的最大值都设置为65535,那么定时器的最大时间就是72MHz&#x2F;65536&#x2F;65536，得到的是中断频率，倒数就是中断时间。【最大值是65536，但计数是从0~65535】<br><img src="https://img-blog.csdnimg.cn/0c44cedb211b40ef85e0be30d0e321c0.png" alt="定时器类型"></p>
-<h2 id="1-1-基本定时器（TIM6和TIM7）"><a href="#1-1-基本定时器（TIM6和TIM7）" class="headerlink" title="1.1 基本定时器（TIM6和TIM7）"></a>1.1 基本定时器（TIM6和TIM7）</h2><p><img src="https://img-blog.csdnimg.cn/4d5def101ec94a80b471cbe15a858aaf.png" alt="基本定时器"></p>
-<h3 id="1-1-1-时基单元"><a href="#1-1-1-时基单元" class="headerlink" title="1.1_1_ 时基单元"></a>1.1_1_ 时基单元</h3><p><img src="https://img-blog.csdnimg.cn/d992b082b9cb400f94fc7760e84d1d68.png" alt="在这里插入图片描述"></p>
-<p>这个可编程定时器的主要部分是一个带有自动重装载的16位累加计数器,计数器的时钟通过一个预分频器得到。<br>软件可以读写计数器、自动重装载寄存器和预分频寄存器,即使计数器运行时也可以操作。时基单元包含：</p>
-<ul>
-<li><p>预分频寄存器(TIMx_PSC)</p>
-<p>预分频器</p>
-<p>预分频可以以系数介于1至65536之间的任意数值对计数器时钟分频,就是对输入的基淮频率提前进行一个分频的操作。它是通过一个16位寄存器(TIMx-PSC)的计数实现分频。因为TIMx-PSC控制寄存器具有缓冲,可以在运行过程中改变它的数值,新的预分频数值将在下一个更新事件时起作用。</p>
-<p><strong>假设这个寄存器写0，就是不分频，或者说是1分频，这时候输出频率&#x3D;输入频率&#x3D;72MHz；如果预分频器写1，那就是2分频，输出频率&#x3D;输入频率&#x2F;2&#x3D;36MHz,所以预分频器的值和实际的分频系数相差了1，即实际分频系数&#x3D;预分频器的值+1。</strong></p>
-</li>
-</ul>
-<p><img src="https://img-blog.csdnimg.cn/1ca319768b75449c88f39d92f7df8713.png" alt="在这里插入图片描述"></p>
-<p>注意：实际的设置计数器使能信号CNT_EN相对于CEN滞后一个时钟周期。</p>
-<ul>
-<li><p>计数器寄存器(TIMx_CNT)</p>
-<p>计数器由预分频输出CK_CNT驱动，设置TIMx_CR1寄存器中的计数器使能位(CEN)使能计数器计数。这个计数器可以对预分频后的计数时钟进行计数,计数时钟每来一个上升滑，计数器的值就加1,由于这个计数器也是16位的，所以里面的值可以从0一直加到65535，如果再加的话，计数器就会回到0重新开始。所以计数器的值在计时过程中会不断地自增运行，当自增运行到目标值时，产生中断，那就完成了定时的任务，所以现在还需要一个存储目标值的寄存器，那就是自动重装寄存器了。</p>
-</li>
-</ul>
-<p><strong>时序图讲解</strong></p>
-<p>自动重裝载寄存器(TIMx_ARR)<br>自动重装载寄存器是预加载的,每次读写自动重装载寄存器时,实际上是通过读写预加载寄存器实现。根据TIMx CR1寄存器中的自动重装载预加载使能位(ARPE),写入预加载寄存器的内容能够立即或在每次更新事件时,传送到它的影子寄存器。当TIMx CR1寄存器的UDIS位为’0’,则每当计数器达到溢出值时,硬件发出更新事件;软件也可以产生更新事件;关于更新事件的产生，随后会有详细的介绍。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>AI大模型-3Baseline优化加速</title>
-    <url>/posts/47240e3d/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>My first blog !</title>
-    <url>/posts/c86c5a61/</url>
-    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在本篇文章里我将简单介绍我的个人博客搭建过程</p>
-]]></content>
-      <tags>
-        <tag>github</tag>
-        <tag>git</tag>
-        <tag>node.js</tag>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
